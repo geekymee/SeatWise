@@ -1,32 +1,24 @@
 @import "tailwindcss";
-
-
-
-
+@layer base{
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+}
 :root {
-  /* Colors */
-  --green-login: #92DBB6;
-  --green-medium: #003944;
-  --green-light: #295D68;
-  --green-dark: #111F35;
-  --green-save: #23CA85;
+
+  --blue-login: #6EACDA;
+  --blue-medium: #0F4C75;
+  --blue-light: #3282B8;
+  --blue-dark: #1B262C;
+  --blue-save: #1C7293;
   --grey-all: #BECCCF;
   --red-download: #DD7A96;
-  --background: #F2F4E7;
+  --background: #BBE1FA;
 
-  /* Letter spacing */
   --letter-spacing-needed: 0.09em;
 
-  /* Fonts */
-  --font-outfit-thin: 'Outfit-Thin', sans-serif;
-  --font-outfit-extralight: 'Outfit-ExtraLight', sans-serif;
-  --font-outfit-light: 'Outfit-Light', sans-serif;
-  --font-outfit-regular: 'Outfit-Regular', sans-serif;
-  --font-outfit-medium: 'Outfit-Medium', sans-serif;
-  --font-outfit-semibold: 'Outfit-SemiBold', sans-serif;
-  --font-outfit-bold: 'Outfit-Bold', sans-serif;
-  --font-outfit-extrabold: 'Outfit-ExtraBold', sans-serif;
-  --font-outfit-black: 'Outfit-Black', sans-serif;
 }
 .bg-login-signup {
   background-image: url('/src/assets/backgroundimage.jpg');
@@ -51,6 +43,3 @@
 .container {
   background-color: var(--background);
 }
-
-
-/* how media quries work */
