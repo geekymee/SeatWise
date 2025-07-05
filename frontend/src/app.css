@@ -1,0 +1,56 @@
+@import "tailwindcss";
+
+
+
+
+:root {
+  /* Colors */
+  --green-login: #92DBB6;
+  --green-medium: #003944;
+  --green-light: #295D68;
+  --green-dark: #111F35;
+  --green-save: #23CA85;
+  --grey-all: #BECCCF;
+  --red-download: #DD7A96;
+  --background: #F2F4E7;
+
+  /* Letter spacing */
+  --letter-spacing-needed: 0.09em;
+
+  /* Fonts */
+  --font-outfit-thin: 'Outfit-Thin', sans-serif;
+  --font-outfit-extralight: 'Outfit-ExtraLight', sans-serif;
+  --font-outfit-light: 'Outfit-Light', sans-serif;
+  --font-outfit-regular: 'Outfit-Regular', sans-serif;
+  --font-outfit-medium: 'Outfit-Medium', sans-serif;
+  --font-outfit-semibold: 'Outfit-SemiBold', sans-serif;
+  --font-outfit-bold: 'Outfit-Bold', sans-serif;
+  --font-outfit-extrabold: 'Outfit-ExtraBold', sans-serif;
+  --font-outfit-black: 'Outfit-Black', sans-serif;
+}
+.bg-login-signup {
+  background-image: url('/src/assets/backgroundimage.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+.my-button {
+  background-color: var(--green-login);
+  font-family: var(--font-outfit-regular);
+  letter-spacing: var(--letter-spacing-needed);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  color: white;
+}
+
+.heading-large {
+  font-family: var(--font-outfit-bold);
+  color: var(--green-medium);
+}
+
+.container {
+  background-color: var(--background);
+}
+
+
+/* how media quries work */
