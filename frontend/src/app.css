@@ -1,4 +1,5 @@
 @import "tailwindcss";
+
 @layer base{
     input[type="number"]::-webkit-inner-spin-button,
     input[type="number"]::-webkit-outer-spin-button {
@@ -11,7 +12,7 @@
   --blue-login: #6EACDA;
   --blue-medium: #0F4C75;
   --blue-light: #3282B8;
-  --blue-dark: #1B262C;
+  --blue-dark: #04324b;
   --blue-save: #1C7293;
   --grey-all: #BECCCF;
   --red-download: #DD7A96;
@@ -20,12 +21,7 @@
   --letter-spacing-needed: 0.09em;
 
 }
-.bg-login-signup {
-  background-image: url('/src/assets/backgroundimage.jpg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center;
-}
+
 .my-button {
   background-color: var(--green-login);
   font-family: var(--font-outfit-regular);

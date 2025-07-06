@@ -1,11 +1,12 @@
-import Home from "./components/Home"
+import Register from "./components/Register";
+import { Route, Routes } from 'react-router-dom';
 import './app.css'
 function App() {
 
   return (
-  
-    <Home/>
-  
+    <Routes>
+      <Route path="/register" element={<Register />} />
+    </Routes>
   )
 }
 
