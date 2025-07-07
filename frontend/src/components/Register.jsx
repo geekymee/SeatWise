@@ -137,7 +137,7 @@ const Register = () => {
                                 onFocus={() => setUserFocus(true)}
                                 onBlur={() => setUserFocus(false)}
                                 placeholder="Enter your username"
-                                className={`w-full h-12 px-3 py-2 rounded-[10px] shadow-sm focus:outline-none focus:ring 
+                                className={`w-full h-12 px-3 py-2 rounded-[10px] shadow-sm focus:outline-none focus:ring-white 
                             ${validName ? "border-2 border-green-600 focus:border focus:ring-green-600 focus:ring-opacity-50" : "focus:ring-white focus:ring-opacity-40"} 
                             ${!validName && user ? "border-2 border-red-700 focus:border focus:border-red-700 focus:ring-red-700 focus:ring-opacity-70" : ""}`}
                             />
@@ -201,7 +201,7 @@ const Register = () => {
                                 />
                                 <div className={`flex bg-[var(--blue-medium)] w-10 h-12 rounded-r-[10px] items-center justify-center ${!pwdFocus && validPwd ? "border-y-2 border-r-2 border-green-600" : ""} 
                             ${!pwdFocus && !validPwd && pwd ? "border-y-2 border-r-2 border-red-700" : ""}`}>
-                                    <FontAwesomeIcon icon={showPwd ? faEyeSlash : faEye} className="text-gray-400 cursor-pointer border-gray-300" onClick={toggleShowPwd} />
+                                    <FontAwesomeIcon icon={showPwd ? faEyeSlash : faEye} className="text-white cursor-pointer border-white" onClick={toggleShowPwd} />
                                 </div>
                             </div>
                             <div id="pwdnote" className={pwdFocus && !validPwd ? "flex flex-row text-xs rounded-lg bg-red-200 text-red-700 p-1 mt-[5px]" : "absolute left-[-9999px]"}>
@@ -235,7 +235,7 @@ const Register = () => {
                                 />
                                 <div className={`flex bg-[var(--blue-medium)] w-10 h-12 rounded-r-[10px] items-center justify-center ${!matchFocus && validMatch && matchPwd ? "border-y-2 border-r-2 border-green-600" : ""} 
                             ${!matchFocus && !validMatch && matchPwd ? "border-y-2 border-r-2 border-red-700" : ""}`}>
-                                    <FontAwesomeIcon icon={showConfirmPwd ? faEyeSlash : faEye} className="text-gray-400 cursor-pointer border-gray-300" onClick={toggleShowConfirmPwd} />
+                                    <FontAwesomeIcon icon={showConfirmPwd ? faEyeSlash : faEye} className="text-white cursor-pointer border-white" onClick={toggleShowConfirmPwd} />
                                 </div>
                             </div>
                             <p id="confirmnote" className={matchFocus && !validMatch ? "text-xs rounded-lg bg-red-200 text-red-700 p-1 mt-[5px]" : "absolute left-[-9999px]"}>
@@ -257,7 +257,7 @@ const Register = () => {
                         Don't have an account?
                     </p>
                     <span className="block hover:text-black hover:underline">
-                        <Link to="/">Sign In</Link>
+                        <Link to="/login">Sign In</Link>
                     </span>
                 </div>
             </div>
