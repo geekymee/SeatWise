@@ -257,7 +257,7 @@ const Register = () => {
                         Don't have an account?
                     </p>
                     <span className="block hover:text-black hover:underline">
-                        <Link to="/login">Sign In</Link>
+                        <Link to="/">Sign In</Link>
                     </span>
                 </div>
             </div>
