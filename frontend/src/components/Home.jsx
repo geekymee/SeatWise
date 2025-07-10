@@ -31,7 +31,7 @@ function Home() {
                     <div className={`flex-none flex ${isReqWidth ? "flex-col gap-7" : "flex-row px-24"} justify-between`}>
                         <img src={addroom} className="h-16" alt="Manage Rooms" />
                         <img src={calendar} className="h-16" alt="Exam Schedule" />
-                        <img src={allocate} className="h-16" alt="Room Allocation Overview" />
+                        <img src={allocate} className="h-16" alt="Room Allocation Review" />
                     </div>
                     <div className={`flex ${isReqWidth ? "flex-col py-5" : "flex-row py-1 px-28 "}`}>
                         <div className="h-3 w-3 transform rotate-45 border-2 border-[var(--blue-dark)]">
@@ -49,7 +49,7 @@ function Home() {
                     <div className={`flex ${isReqWidth ? "flex-col gap-5" : "flex-row gap-10"} justify-between  font-light`}>
                         <p>Add or remove exam halls and update the number of available seats on the <b>Manage Rooms</b> page.</p>
                         <p>View or update upcoming exam details on the <b>Exam Schedule</b> page. </p>
-                        <p>Download Excel reports containing exam hall and participant details from the <b>Room Allocation Overview</b> page.</p>
+                        <p>Download Excel reports containing exam hall and participant details from the <b>Room Allocation Review</b> page.</p>
                     </div>
                 </div>
             </div>

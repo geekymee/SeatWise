@@ -188,7 +188,6 @@ export default function ManageRoom() {
             <div className="px-8 py-4">
                 <h2 className="text-xl font-bold mb-3">AVAILABLE ROOMS</h2>
                 <div className={`flex flex-wrap items-center bg-gray-100 p-4 rounded-md font-regular`}>
-                    {/* Search Bar */}
                     <div className="flex-grow flex flex-row items-center">
                         <span className="ml-2 text-gray-500 flex-none">
                             <svg viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6">
@@ -207,7 +206,6 @@ export default function ManageRoom() {
                         />
                     </div>
                     <div className="flex-grow flex flex-row">
-                        {/* Sort By Dropdown */}
                         <div className="flex-grow flex flex-row items-center ">
                             <p className="ml-2 mr-1 whitespace-nowrap">Sort By :</p>
                             <select className="w-full p-[10.4px] m-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
@@ -218,7 +216,6 @@ export default function ManageRoom() {
                             </select>
                         </div>
 
-                        {/* Filter By Dropdown */}
                         <div className="flex-grow flex flex-row items-center">
                             <p className="ml-2 mr-1 whitespace-nowrap">Filter By :</p>
                             <select className="w-full p-[10.4px] m-1 mr-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"

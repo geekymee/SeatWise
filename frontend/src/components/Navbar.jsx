@@ -79,7 +79,7 @@ export default function NavBar() {
                 </NavLink>
 
                 <div className="flex-grow"></div> 
-                <NavLink to="/login" onClick={handleLogout} className="text-center hover:bg-[var(--blue-light)] py-2 w-full">
+                <NavLink to="/" onClick={handleLogout} className="text-center hover:bg-[var(--blue-light)] py-2 w-full">
                     <p className={`font-medium tracking-needed text-white ${expand ? "mx-6" : "absolute left-[-999px]"}`}>Log Out</p>
                     <img src={logout} className={`${expand ? "absolute left-[-999px]" : "h-7 w-7 mx-4"}`} title="Log Out" />
                 </NavLink>
