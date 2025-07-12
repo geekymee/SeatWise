@@ -6,8 +6,10 @@ import cors from 'cors';
 import { allowedOrigins } from './constants.js';
 import cookieParser from 'cookie-parser';
 import { credentials } from './middlewares/credentials.js';
-import authRoute from './routes/auth.route.js'
-import registerRoute from './routes/register.route.js'
+import authRoute from './routes/auth.route.js';
+import registerRoute from './routes/register.route.js';
+import logoutRoute from './routes/logout.route.js';
+import refreshTokenRoute from './routes/refreshToken.route.js';
 const app = express();
 const PORT = process.env.PORT || 5500;
 
@@ -42,7 +44,8 @@ app.use(cookieParser());
 
 app.use('/register', registerRoute);
 app.use('/auth', authRoute);
-
+app.use('/refresh',refreshTokenRoute );
+app.use('/logout', logoutRoute);
 
 
 
