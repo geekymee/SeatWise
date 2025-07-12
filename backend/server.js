@@ -5,6 +5,9 @@ import express from 'express';
 import cors from 'cors';
 import { allowedOrigins } from './constants.js';
 import cookieParser from 'cookie-parser';
+import { credentials } from './middlewares/credentials.js';
+import authRoute from './routes/auth.route.js'
+import registerRoute from './routes/register.route.js'
 const app = express();
 const PORT = process.env.PORT || 5500;
 
@@ -37,7 +40,8 @@ app.use(express.json());
 
 app.use(cookieParser());
 
-
+app.use('/register', registerRoute);
+app.use('/auth', authRoute);
 
 
 
