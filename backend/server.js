@@ -10,6 +10,8 @@ import authRoute from './routes/auth.route.js';
 import registerRoute from './routes/register.route.js';
 import logoutRoute from './routes/logout.route.js';
 import refreshTokenRoute from './routes/refreshToken.route.js';
+import verifyJWT from './middlewares/jwtVerification.js';
+import manageRoom from './routes/room.route.js';
 const app = express();
 const PORT = process.env.PORT || 5500;
 
@@ -46,6 +48,9 @@ app.use('/register', registerRoute);
 app.use('/auth', authRoute);
 app.use('/refresh',refreshTokenRoute );
 app.use('/logout', logoutRoute);
+
+app.use(verifyJWT);
+app.use('/manage-room', manageRoom);
 
 
 

@@ -9,16 +9,17 @@ const RoomSchema = new mongoose.Schema({
     room_no: {
         type: String,
         required: [true, 'Please provide room no'],
+        unique: true, 
     },
     floor_no: {
         type: Number,
         required: [true, 'Please provide floor no'],
     },
-    block: {
+    building: {
         type: String,
         required: [true, 'Please provide block name'],
         enum: {
-            values: ['M-George', 'Ramanujan'],
+            values: ['Main building', 'SMS building', 'CC building'],
             message: '{VALUE} is not supported'
         }
     },
