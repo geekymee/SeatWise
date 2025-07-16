@@ -14,7 +14,7 @@ const ScheduleSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: [true, 'Provide Date'],
-        index: { expires: '100d' },
+       
     },
     time: {
         type: String,
@@ -33,7 +33,12 @@ const ScheduleSchema = new mongoose.Schema({
     subcode: {
         type: String,
         required: [true, 'Provide subcode info'],
-    }
+    },
+    createdAt : {
+    type: Date,
+    default: Date.now,
+    expires: '100d' 
+  }
 },
     { timestamps: true }
 );

@@ -1,11 +1,11 @@
 import mongoose from "mongoose";
 
 
-const SubjectSchema = new mongoose.Schema({
+const SlotSchema = new mongoose.Schema({
     branch: {
         type: String,
     },
-    Subject: {
+    slot: {
         type: String,
     },
     sem: {
@@ -16,4 +16,4 @@ const SubjectSchema = new mongoose.Schema({
     }
 });
 
-export const Subject = mongoose.model('Subject', SubjectSchema);
+export const Slot = mongoose.model('Slot',  SlotSchema);
