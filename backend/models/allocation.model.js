@@ -9,7 +9,7 @@ const AllocationSchema = new mongoose.Schema({
     date: {
         type: Date,
         required: [true, 'Provide Date'],
-        index: { expires: '100d' },
+        
     },
     time: {
         type: String,
@@ -22,7 +22,12 @@ const AllocationSchema = new mongoose.Schema({
     seats: {
         type: Number,
         required: [true, 'Please provide no of seats']
-    }
+    },
+    createdAt : {
+    type: Date,
+    default: Date.now,
+    expires: '100d' 
+  }
 },
     { timestamps: true }
 );

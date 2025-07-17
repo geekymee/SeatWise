@@ -1,5 +1,5 @@
-import Slot from '../models/slot.model.js';
-import Schedule from '../models/schedule.model.js';
+import {Slot} from '../models/slot.model.js';
+import {Schedule} from '../models/schedule.model.js';
 import path from 'path';
 import { createBranches } from '../utils/createBranches.js';
 import { fileURLToPath } from 'url';

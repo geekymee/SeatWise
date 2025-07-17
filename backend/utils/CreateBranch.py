@@ -66,9 +66,10 @@ def create_slot_sheets(wb, temp_ws, codeno):
         regular = wb.create_sheet(slot)
         supply = None
         regnos = [row[regno_col - 1] for row in temp_ws.iter_rows(min_row=1, values_only=True) if row[slot_col - 1] == slot]
-        years = sorted({extract_year(reg) for reg in regnos if extract_year(reg)})
-
-
+        years = sorted({
+            int(reg[2:3]) for reg in regnos
+            if isinstance(reg, str) and len(reg) >= 5 and reg[2:3].isdigit()
+        })
         if len(years) > 1:
             supply = wb.create_sheet(slot + "_supply")
 

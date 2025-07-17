@@ -10,11 +10,12 @@ import authRoute from './routes/auth.route.js';
 import registerRoute from './routes/register.route.js';
 import logoutRoute from './routes/logout.route.js';
 import refreshTokenRoute from './routes/refreshToken.route.js';
-import verifyJWT from './middlewares/jwtVerification.js';
 import manageRoom from './routes/room.route.js';
+import examSchedule from './routes/schedule.route.js';
+import seatAllocation from './routes/allocation.route.js';
+import verifyJWT from './middlewares/jwtVerification.js';
 const app = express();
 const PORT = process.env.PORT || 5500;
-
 
 ;( async()=>{
     try {
@@ -51,14 +52,8 @@ app.use('/logout', logoutRoute);
 
 app.use(verifyJWT);
 app.use('/manage-room', manageRoom);
-
-
-
-
-
-
-
-
+app.use('/exam-schedule', examSchedule);
+app.use('/seat-allocation-review', seatAllocation);
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');
