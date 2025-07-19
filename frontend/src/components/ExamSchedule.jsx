@@ -36,7 +36,7 @@ export default function ExamSchedule() {
     const handleToggle = () => {
         setToggle(!toggle);
     }
-
+    
     const handleFiles = () => {
         setLoading(true);
         const controller = new AbortController();
@@ -288,7 +288,7 @@ export default function ExamSchedule() {
                                 <th className="text-center px-4 py-2"><span className="whitespace-nowrap">Slot</span></th>
                                 <th className="text-center px-4 py-2"><span className="whitespace-nowrap">Subject</span></th>
                                 <th className="text-center pt-2 rounded-tr-2xl rounded-br-2xl ">
-                                    <div class="flex items-center justify-center mb-2">
+                                    <div className="flex items-center justify-center mb-2">
                                         <div className={`w-9 h-5 rounded-full cursor-pointer flex ${toggle ? "bg-green-600 p-1 pl-2" : "bg-gray-600 p-1"}`}
                                             onClick={handleToggle} title={`${toggle ? "Sort By Date" : "Sort By Branch"}`}>
                                             <div className={`w-3 h-3 rounded-full bg-white ${toggle ? "translate-x-full" : ""}`}></div>
@@ -298,17 +298,24 @@ export default function ExamSchedule() {
                             </tr>
                         </thead>
                         <tbody>
-                            {loading ? (<ThreeCircles
-                                height="65"
-                                width="65"
-                                color="#23ca85"
-                                wrapperStyle={{
-                                    "position": "absolute",
-                                    "left": "47%",
-                                    "top": "48%"
-                                }}
-                                visible={true}
-                            />) : (sortedExams.map(item => <ExamScheduleRow key={item._id} id={item._id} date={item.date} sem={item.sem} branch={item.branch} slot={item.slot} subcode={item.subcode} handleDelete={handleDelete} />))
+                            {loading ? (
+                                
+                                <tr>
+                                    <td colSpan="5" className="text-center py-6">
+                                        <ThreeCircles
+                                        height="65"
+                                        width="65"
+                                        color="#23ca85"
+                                        wrapperStyle={{
+                                            "position": "absolute",
+                                            "left": "47%",
+                                            "top": "48%"
+                                        }}
+                                visible={true}/>
+                                    </td>
+                                </tr>
+
+                            ) : (sortedExams.map(item => <ExamScheduleRow key={item._id} id={item._id} date={item.date} sem={item.sem} branch={item.branch} slot={item.slot} subcode={item.subcode} handleDelete={handleDelete} />))
                             }
                         </tbody>
                     </table>

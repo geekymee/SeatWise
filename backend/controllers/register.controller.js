@@ -2,6 +2,7 @@ import { User } from '../models/user.model.js';
 import bcrypt from 'bcrypt';
 
 const handleNewUser = async (req, res) => {
+    
     const { user, email, pwd } = req.body;
     if (!user || !email || !pwd) return res.status(400).json({ 'message': 'Username and password are required.' });
     const duplicate = await User.findOne({ username: user }).exec();

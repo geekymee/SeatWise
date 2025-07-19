@@ -7,7 +7,7 @@ import useAuth from "../hooks/useAuth";
 import '../app.css';
 import backgroundimg from "../assets/backgroundimage.jpg"
 
-const LOGIN_URL = '/login';
+const LOGIN_URL = '/auth';
 
 export default function Login() {
     const navigate = useNavigate();

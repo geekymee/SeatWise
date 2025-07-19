@@ -16,15 +16,15 @@ function App() {
       <Route path="/" element={<Login />} />
       <Route path="/register" element={<Register />} />
 
-      {/* <Route element={<KeepLoggedin />}> */}
-        {/* <Route element={<RequireAuth />}> */}
+      <Route element={<KeepLoggedin />}> 
+         <Route element={<RequireAuth />}>
           <Route path="/" element={<Layout />}>
             <Route path="home" element={<Home />} />
             <Route path="manage-room" element={<ManageRoom />} />
             <Route path="exam-schedule" element={<ExamSchedule />} />
             <Route path="room-allocation-review" element={<RoomAllocationReview />} />
-          {/* </Route> */}
-        {/* </Route> */}
+          </Route>
+        </Route>
       </Route>
     </Routes>
   )

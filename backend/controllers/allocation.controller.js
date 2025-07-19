@@ -1,12 +1,12 @@
 import {Schedule} from '../models/schedule.model.js'
 import {Room} from '../models/room.model.js'
 import {Allocation} from '../models/allocation.model.js'
-import {generateSeating} from '../utils/generateSeating.js'
+import {generateSeating} from '../generateSeating.js'
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import nodemailer from 'nodemailer'
-import countStudents from '../utils/countStudents.js'
+import countStudents from '../countStudents.js'
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);

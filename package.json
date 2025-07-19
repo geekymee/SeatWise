@@ -1,0 +1,27 @@
+{
+  "name": "seatwise",
+  "version": "1.0.0",
+  "description": "ExamhallSeatAllotment is a project designed to automate and optimize the process of assigning seats to students during examinations. The system reduces manual workload for administrators and provides a streamlined, error-free seating arrangement, which can be viewed, printed, or exported as needed.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend": "cd frontend && npm run dev",
+    "backend": "cd backend && npm run dev",
+    "dev": "concurrently -n \"frontend,backend\" -c \"bgBlue.bold,bgYellow.bold\" \"npm run frontend\" \"npm run backend\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/geekymee/SeatWise.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/geekymee/SeatWise/issues"
+  },
+  "homepage": "https://github.com/geekymee/SeatWise#readme",
+  "dependencies": {
+    "concurrently": "^9.2.0"
+  }
+}

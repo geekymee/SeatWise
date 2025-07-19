@@ -15,7 +15,7 @@ import examSchedule from './routes/schedule.route.js';
 import seatAllocation from './routes/allocation.route.js';
 import verifyJWT from './middlewares/jwtVerification.js';
 const app = express();
-const PORT = process.env.PORT || 5500;
+const PORT = process.env.PORT || 3500;
 
 ;( async()=>{
     try {

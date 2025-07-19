@@ -33,7 +33,7 @@ export default function ManageRoom() {
       
         if (list.length > 0 && filterTerm) {
             if (['Main building', 'SMS building', 'CC building'].includes(filterTerm)) {
-                list = list.filter((item) => item.block === filterTerm);
+                list = list.filter((item) => item.building === filterTerm);
             } else if (filterTerm !== 'nil') {
                 list = list.filter((item) => item.floor_no.toString() === filterTerm);
             }
@@ -60,13 +60,20 @@ export default function ManageRoom() {
     const handleRoom = (e) => {
         e.preventDefault();
         setLoading(true);
-        const newRoom = { room_no: roomNoRef.current.value, floor_no: Number(floorNoRef.current.options[floorNoRef.current.selectedIndex].value), building: buildingRef.current.options[buildingRef.current.selectedIndex].value, capacity: Number(capacityRef.current.value) };
-
+        const newRoom = { 
+            room_no:  roomNoRef.current.value, 
+            floor_no: parseInt(floorNoRef.current.options[floorNoRef.current.selectedIndex].value, 10), 
+            building: buildingRef.current.options[buildingRef.current.selectedIndex].value, 
+            capacity: parseInt(capacityRef.current.value, 10) 
+        };
+        console.log('POST payload:', newRoom);
         let isMounted = true;
+        console.log(isMounted);
         const controller = new AbortController();
 
         const postRooms = async () => {
             setLoading(true);
+            
             try {
                 await axiosPrivate.post(url, newRoom, {
                     signal: controller.signal
@@ -178,7 +185,13 @@ export default function ManageRoom() {
                 <h2 className="text-xl font-bold mb-3">ADD ROOM</h2>
                 <form ref={formRef} className="flex hw:flex-col flex-row justify-between" onSubmit={handleRoom}>
                     <Input input_id="room-no" title="Room No" inputRef={roomNoRef} type="text" placeholder="Enter the room number" required />
-                    <Dropdown id="branch" title="Floor No" inputRef={floorNoRef} options={['Ground', 'First', 'Second']} required />
+                    <Dropdown id="branch" title="Floor No" inputRef={floorNoRef} 
+                    options={[
+                      { label: 'Ground', value: 0 },
+                      { label: 'First',  value: 1 },
+                      { label: 'Second', value: 2 },
+                    ]}
+                    required />
                     <Dropdown id="slot" title="Building" inputRef={buildingRef} options={['Main building', 'SMS building', 'CC building']} required />
                     <Input input_id="total-seats" title="Available Seats" inputRef={capacityRef} type="text" placeholder="Enter the number of seats available" required />
                     <button className="bg-blue-500 hover:bg-blue-400 text-white font-Outfit-Bold py-1 px-2 my-7 mx-2 h-10 w-[5rem] rounded-[20px]" type="submit">ADD</button>
@@ -197,7 +210,7 @@ export default function ManageRoom() {
                                     clipRule="evenodd"
                                 />
                             </svg>
-                        </span>
+                        </span> 
                         <input
                             type="text"
                             placeholder="Search"
@@ -262,7 +275,7 @@ export default function ManageRoom() {
                                 </td>
                             </tr>
       
-                            ) : (list.map(item => <ManageRow key={item._id} room={item.room_no} floor={item.floor_no} block={item.block}
+                            ) : (list.map(item => <ManageRow key={item._id ?? item.room_no} room={item.room_no} floor={item.floor_no} building={item.building}
                                 available={item.capacity} handleDelete={handleDelete} />))
                             }
                         </tbody>

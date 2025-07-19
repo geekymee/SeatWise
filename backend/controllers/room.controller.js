@@ -1,9 +1,14 @@
 import {Room} from '../models/room.model.js'
 
 export const handleRoom = async (req, res) => {
-    const { room_no, floor_no, block, capacity } = req.body;
+    const { room_no, floor_no, building, capacity } = req.body;
 
-    if (!room_no || !floor_no || !block || !capacity) {
+    if (
+      room_no == null ||
+      floor_no == null ||
+      building == null ||
+      capacity == null
+    ) {
         return res.status(400).json({ 'failure': 'Please make sure all fields are filled' });
     }
 
@@ -12,7 +17,7 @@ export const handleRoom = async (req, res) => {
     if (duplicate) return res.status(409).json({ 'failure': 'Room already added' });
 
     try {
-        const createdRoom = await Room.create({ user: req.user.id, room_no, floor_no, block, capacity });
+        const createdRoom = await Room.create({ user: req.user.id, room_no, floor_no, building, capacity });
         console.log(createdRoom);
         res.status(201).json(createdRoom);
     }

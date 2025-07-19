@@ -1,7 +1,7 @@
 import {Slot} from '../models/slot.model.js';
 import {Schedule} from '../models/schedule.model.js';
 import path from 'path';
-import { createBranches } from '../utils/createBranches.js';
+import { createBranches } from '../createBranches.js';
 import { fileURLToPath } from 'url';
 import { dirname } from 'path';
 
@@ -10,6 +10,7 @@ const __dirname = dirname(__filename);
 
 export const getSubcode = async (req, res) => {
     const { sem, branch, slot } = req.query;
+    onsole.log("Query Params:", req.query);
     if (!branch || !slot) return res.status(400).json({ 'message': 'provide branch and slot' });
     try {
         const slots = await Slot.findOne({ sem, branch, slot }, { subcode: 1, _id: 0 });
@@ -82,6 +83,7 @@ export const uploadFile = async (req, res) => {
 
     Object.keys(files).forEach(key => {
         const filepath = path.join(__dirname, "..", 'uploadedExcels', files[key].name);
+        console.log("filepath :" , filepath)
         files[key].mv(filepath, (err) => {
             if (err) return res.status(500).json({ status: "error", message: err });
         })
