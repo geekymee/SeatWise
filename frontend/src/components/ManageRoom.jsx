@@ -194,14 +194,14 @@ export default function ManageRoom() {
                     required />
                     <Dropdown id="slot" title="Building" inputRef={buildingRef} options={['Main building', 'SMS building', 'CC building']} required />
                     <Input input_id="total-seats" title="Available Seats" inputRef={capacityRef} type="text" placeholder="Enter the number of seats available" required />
-                    <button className="bg-blue-500 hover:bg-blue-400 text-white font-Outfit-Bold py-1 px-2 my-7 mx-2 h-10 w-[5rem] rounded-[20px]" type="submit">ADD</button>
+                    <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold py-1 px-2 my-7 mx-2 h-10 w-[5rem] rounded-[20px]" type="submit">ADD</button>
                 </form>
             </div>
 
             <div className="px-8 py-4">
                 <h2 className="text-xl font-bold mb-3">AVAILABLE ROOMS</h2>
-                <div className={`flex flex-wrap items-center bg-gray-100 p-4 rounded-md font-regular`}>
-                    <div className="flex-grow flex flex-row items-center">
+                <div className={`flex flex-wrap items-center bg-gray-100 p-4 font-regular rounded-md shadow-md mb-2 ${loading ? "opacity-50" : ""}`}>
+                    <div className="flex-grow flex flex-row items-center ">
                         <span className="ml-2 text-gray-500 flex-none">
                             <svg viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6">
                                 <path
@@ -213,15 +213,15 @@ export default function ManageRoom() {
                         </span> 
                         <input
                             type="text"
-                            placeholder="Search"
+                            placeholder="Search by Room No"
                             onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full p-2 mx-2 my-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
+                            className="w-full p-2 mx-2 my-1 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
                         />
                     </div>
                     <div className="flex-grow flex flex-row">
                         <div className="flex-grow flex flex-row items-center ">
                             <p className="ml-2 mr-1 whitespace-nowrap">Sort By :</p>
-                            <select className="w-full p-[10.4px] m-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
+                            <select className="w-full p-[10.4px] m-1 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
                                 defaultValue="" onChange={(e) => setSortTerm(e.target.value)}>
                                 <option value="">Enteries</option>
                                 <option value="asc">Floor(0 - 2)</option>
@@ -231,7 +231,7 @@ export default function ManageRoom() {
 
                         <div className="flex-grow flex flex-row items-center">
                             <p className="ml-2 mr-1 whitespace-nowrap">Filter By :</p>
-                            <select className="w-full p-[10.4px] m-1 mr-2 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
+                            <select className="w-full p-[10.4px] m-1 mr-2 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
                                 defaultValue="nil" onChange={(e) => setFilterTerm(e.target.value)}>
                                 <option value="nil" >-</option>
                                 'Main building', 'SMS building', 'CC building'
@@ -249,18 +249,18 @@ export default function ManageRoom() {
                 <div className="h-72 overflow-y-auto relative">
                     <table className="table-auto w-full">
                         <thead className="sticky top-0">
-                            <tr className="bg-[var(--grey-all)] font-bold">
-                                <th className="text-center px-4 py-2 rounded-tl-2xl rounded-bl-2xl"><span className="whitespace-nowrap">Room No</span></th>
+                            <tr className="bg-[var(--blue-medium)] text-white shadow-md m-4">
+                                <th className="text-center px-4 py-2 rounded-tl-md rounded-bl-md"><span className="whitespace-nowrap">Room No</span></th>
                                 <th className="text-center px-4 py-2"><span className="whitespace-nowrap">Floor No</span></th>
                                 <th className="text-center px-4 py-2"><span className="whitespace-nowrap">Building</span></th>
                                 <th className="text-center px-4 py-2"><span className="whitespace-nowrap">Available Seats</span></th>
-                                <th className="px-4 py-2 rounded-tr-2xl rounded-br-2xl"></th>
+                                <th className="px-4 py-2 rounded-tr-md rounded-br-md"></th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody >
                             {loading ? (
-                            <tr>
-                                <td colSpan="5" className="text-center py-6">
+                            <tr >
+                                <td colSpan="5" className="text-center py-6 ">
                                     <ThreeCircles
                                     height="65"
                                     width="65"
@@ -290,7 +290,7 @@ export default function ManageRoom() {
                     </div>
                     <div className="flex flex-row gap-10">
                         <button className="bg-gray-500 hover:bg-gray-400 text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleClearall}>CLEAR ALL</button>
-                        <button className="bg-green-500 hover:bg-green-400 text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleNext}>NEXT</button>
+                        <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleNext}>NEXT</button>
                     </div>
                 </div>
             </div>

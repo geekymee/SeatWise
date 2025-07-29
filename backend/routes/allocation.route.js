@@ -9,10 +9,10 @@ import {getDates,
 const router = express.Router();
 
 router.get('/dates', getDates)
-      .get('/exams', getExams) 
-      .get('/rooms', getRooms) 
+      .get('/get-exams', getExams) 
+      .get('/get-rooms', getRooms) 
       .post('/allocation', createAllocation) 
-      .get('/getallocations', getAllocation)
-      .get('/export', sendExcels);
+      .get('/get-allocation', getAllocation)
+      .get('/send-excels', sendExcels);
 
 export default router;

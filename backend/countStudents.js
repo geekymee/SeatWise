@@ -18,6 +18,8 @@ const totalCount = async (data) => {
 
         
         pythonProcess.on('close', (code) => {
+            console.log(`Python script exited with code ${code}`);
+            console.log(`Result: ${result}`);
             if (code === 0) {
                 const parsedResult = parseInt(result, 10);
                 if (!isNaN(parsedResult)) {

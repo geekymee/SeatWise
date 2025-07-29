@@ -23,6 +23,7 @@ export default function RoomAllocationReview() {
   const [seatSelected, setSeatSelected] = useState(0);
 
   let totalCapacity = rooms.reduce((total, obj) => total + obj.capacity, 0);
+  
 
   const filteredRooms = useMemo(() => {
     let list = rooms;
@@ -63,13 +64,13 @@ export default function RoomAllocationReview() {
       
       rooms: rooms.reduce((acc, { room_no, capacity }) => {
         if (selectedRooms.includes(room_no)) {
-          acc.push({ room_no, capacity });
+          acc.push({  room: room_no, capacity });
         }
         return acc;
       }, []),
       details
     };
-
+    console.log(payload);
     try {
       await axiosPrivate.post(url.concat("/room-allocation-review"), payload, {
         signal: controller.signal
@@ -148,7 +149,7 @@ export default function RoomAllocationReview() {
     }
 
     getRooms();
-
+    
     const getDates = async () => {
       try {
         const dateResponse = await axiosPrivate.get(url.concat("/dates"), {
@@ -236,7 +237,6 @@ export default function RoomAllocationReview() {
                   placeholder="Search"
                 />
               </div>
-              {/* Sort By Dropdown */}
               <div className="flex-grow flex flex-row items-center ">
                 <p className="ml-2 whitespace-nowrap">Sort By :</p>
                 <select className="min-w-[156px] p-[10.4px] m-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
@@ -264,7 +264,6 @@ export default function RoomAllocationReview() {
             </div>
           </div>
           <div className="border border-black border-opacity-50 h-full min-w-[300px] self-center rounded-lg flex flex-col ml-5 hw:w-full hw:mx-4 hw:mt-2">
-            {/* room for exam statistics */}
             <h1 className="p-6 font-bold text-xl"> STATISTICS </h1>
             <hr className="border-t border-black border-opacity-50 ml-5 mr-7"></hr>
             <ul className="pl-3 hw:pb-5 mt-4 font-regular">

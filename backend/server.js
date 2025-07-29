@@ -53,7 +53,7 @@ app.use('/logout', logoutRoute);
 app.use(verifyJWT);
 app.use('/manage-room', manageRoom);
 app.use('/exam-schedule', examSchedule);
-app.use('/seat-allocation-review', seatAllocation);
+app.use('/room-allocation-review', seatAllocation);
 
 mongoose.connection.once('open', () => {
     console.log('Connected to MongoDB');

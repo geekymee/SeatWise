@@ -1,4 +1,3 @@
-import {Slot} from '../models/slot.model.js';
 import {Schedule} from '../models/schedule.model.js';
 import path from 'path';
 import { createBranches } from '../createBranches.js';
@@ -8,23 +7,24 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-export const getSubcode = async (req, res) => {
-    const { sem, branch, slot } = req.query;
-    onsole.log("Query Params:", req.query);
-    if (!branch || !slot) return res.status(400).json({ 'message': 'provide branch and slot' });
-    try {
-        const slots = await Slot.findOne({ sem, branch, slot }, { subcode: 1, _id: 0 });
-        res.send(slots?.subcode || []);
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ 'message': error.message });
-    }
-};
+// export const getSubcode = async (req, res) => {
+//     const { sem, branch, slot } = req.query;
+//     console.log("Query Params:", req.query);
+//     if (!branch || !slot) return res.status(400).json({ 'message': 'provide branch and slot' });
+//     try {
+//         const slots = await Slot.findOne({ sem, branch, slot }, { subcode: 1, _id: 0 });
+//         console.log(slot)
+//         res.send(slots?.subcode || []);
+//     } catch (error) {
+//         console.log(error);
+//         res.status(500).json({ 'message': error.message });
+//     }
+// };
 
 export const addSchedule = async (req, res) => {
     const { sem, date, time, branch, slot, subcode } = req.body;
     const user = req.user.username;
-
+    
     try {
         const existingSchedule = await Schedule.findOne({ 
             $or: [
@@ -40,7 +40,8 @@ export const addSchedule = async (req, res) => {
         const formattedDate = createdSchedule.date.toLocaleDateString('en-GB');
         res.status(201).send({ ...createdSchedule._doc, date: formattedDate });
     } catch (error) {
-        res.status(400).send(error);
+        console.error("[Schedule Creation Error]:", error);
+        res.status(400).send({ error: error.message || error });
     }
 }
 

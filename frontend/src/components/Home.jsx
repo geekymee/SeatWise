@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import logo from '../assets/logo.png'
 import exam from '../assets/exam.png';
 import addroom from '../assets/addRoom.png';
 import calendar from '../assets/calendar.png';
@@ -53,16 +52,7 @@ function Home() {
                     </div>
                 </div>
             </div>
-
-            <div className="p-3 flex flex-row justify-between items-center">
-                <img src={logo} className="h-5 opacity-50" alt="logo" />
-                <div className="flex flex-row gap-5 pr-2 font-light text-[var(--blue-dark)]">
-                    <p className="hover:underline cursor-pointer">About</p>
-                    <p className="hover:underline cursor-pointer ">Contact</p>
-                </div>
-            </div>
         </div>
     );
 }
-
 export default Home;

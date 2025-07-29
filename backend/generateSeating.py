@@ -19,7 +19,7 @@ def main():
             branches = [item.get("branch") for item in details if item.get("slot") == slot]
             students = []
             for branch in branches:
-                file_path = f'./updatedExcels/S{sem}_{branch}.xlsx'
+                file_path = f'./updatedExcels/Sem{sem}_{branch}.xlsx'
                 try:
                     wb = openpyxl.load_workbook(file_path)
                     if slot in wb.sheetnames:
@@ -89,7 +89,7 @@ def main():
 
         for room_sheet in wb_output.sheetnames:
             ws = wb_output[room_sheet]
-            # Skip if no data
+          
             if ws.max_row < 3:
                 continue
             i = 0

@@ -16,11 +16,6 @@ const ScheduleSchema = new mongoose.Schema({
         required: [true, 'Provide Date'],
        
     },
-    time: {
-        type: String,
-        required: [true, 'Provide Time'],
-        
-    },
     branch: {
         type: String,
         required: [true, 'Provide Branch'],

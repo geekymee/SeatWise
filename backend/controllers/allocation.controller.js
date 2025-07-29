@@ -34,19 +34,19 @@ export const getDates = async (req, res) => {
 };
 
 export const getExams = async (req, res) => {
-    const { date, time } = req.query;
+    const { date } = req.query;
     console.log(req.query);
-    const user = req.user.username;
-    if (!date || !time) {
-        return res.status(400).json({ 'message': 'provide date and time' });
+    const user = req.user.username._id || req.user._id; 
+    if (!date ) {
+        return res.status(400).json({ 'message': 'provide date ' });
     }
 
     try {
         const formattedDate = date.split('-').reverse().join('-');
         const dateObject = new Date(formattedDate).toISOString();
 
-        const schedules = await Schedule.find({ date: dateObject, time: time, user: user }).select('sem branch slot subcode').lean();
-
+        const schedules = await Schedule.find({ date: dateObject, user: user }).select('sem branch slot subcode').lean();
+        const rooms = await Room.find({ user }).select('room_no capacity');
         const exams = schedules.reduce((acc, { sem, branch, slot }) => {
             const exam = `S${sem}-${branch}-${slot}`;
             acc.push(exam);
@@ -59,9 +59,11 @@ export const getExams = async (req, res) => {
         }
         const details = schedules.map(({ sem, branch, slot, subcode }) => {
             return { sem, branch, slot, subcode };
+        }); 
+        const room = rooms.map(({ room_no, capacity }) => {
+            return { room_no, capacity };
         });
-
-        const totalStudents = await countStudents({ details });
+        const totalStudents = await countStudents({ details },{ rooms: room });
 
         console.log(totalStudents);
 
@@ -84,19 +86,18 @@ export const getRooms = async (req, res) => {
 
 export const createAllocation = async (req, res) => {
     const user = req.user.username;
-    const { date, time, rooms, details } = req.body;
-    if (!date || !time || !rooms || !details) {
-        return res.status(400).json({ 'message': 'provide date, time and rooms' });
-    }
+    const { date, rooms, details } = req.body;
+    if (!date  || !rooms || !details) {
+        return res.status(400).json({ 'message': 'provide date and rooms' });
+    } 
     const totalCapacity = rooms.reduce((total, obj) => total + obj.capacity, 0);
     console.log("here", totalCapacity);
     const formattedDate = date.split('-').reverse().join('-');
     const dateObject = new Date(formattedDate).toISOString();
     try {
-        // First, find the schedule document that matches the given date, time, and subcode
-        const schedule = await Schedule.findOne({ user, date: dateObject, time });
+        
+        const schedule = await Schedule.findOne({ user, date: dateObject });
 
-        // If a matching schedule document is found, create a new exam document with the required fields
         if (schedule) {
 
             await generateSeating(req.body); // function for manipulating the uploadedExcel file for seat arrangement
@@ -104,19 +105,16 @@ export const createAllocation = async (req, res) => {
             const newAllocation = new Allocation({
                 user: req.user.username,
                 date: dateObject,
-                time,
                 rooms,
                 seats: totalCapacity
             });
 
             await newAllocation.save();
 
-            // Return the newly created exam document or any other relevant data
             res.status(201).json({ "message": 'Allocation created successfully', "Allocation": newAllocation });
         }
         else {
-            // If no matching schedule document is found, return an appropriate error message
-            res.status(404).json({ "error": 'No schedule found for the given date and time' });
+            res.status(404).json({ "error": 'No schedule found for the given date' });
         }
 
     } catch (error) {
@@ -125,16 +123,16 @@ export const createAllocation = async (req, res) => {
 };
 
 export const getAllocation = async (req, res) => {
-    const { date, time } = req.query;
+    const { date} = req.query;
     console.log(req.query);
     const user = req.user.username;
-    if (!date || !time) {
-        return res.status(400).json({ 'message': 'provide date and time' });
+    if (!date ) {
+        return res.status(400).json({ 'message': 'provide date' });
     }
     try {
         const formattedDate = date.split('-').reverse().join('-');
         const dateObject = new Date(formattedDate).toISOString();
-        const allocations = await Allocations.find({ user, date: dateObject, time: time }).select('rooms seats').lean();
+        const allocations = await allocations.find({ user, date: dateObject }).select('rooms seats').lean();
         const rooms = allocations?.flatMap(allocation => allocation.rooms.map(item => item.room_no));
         const seatSelected = allocations.length === 0 ? 0 : allocations[0].seats;
         return res.status(200).json({ rooms, seats: seatSelected });
@@ -149,7 +147,6 @@ export const sendExcels = async (req, res) => {
 
     try {
 
-        // Read the contents of the directory
         const files = await fs.promises.readdir(directoryPath);
         console.log(files);
 
@@ -157,7 +154,6 @@ export const sendExcels = async (req, res) => {
             return res.status(404).json({ message: 'No files found in the directory' });
         }
 
-        // Create a Nodemailer transporter
         const transporter = nodemailer.createTransport({
             // Configure your email provider details here
             service: 'gmail',
@@ -175,7 +171,6 @@ export const sendExcels = async (req, res) => {
             return null;
         }).filter((attachment) => attachment !== null);
 
-        // Prepare the email message
         const mailOptions = {
             from: process.env.EMAIL,
             to: email,
@@ -184,7 +179,6 @@ export const sendExcels = async (req, res) => {
             attachments: attachments
         };
 
-        // Send the email
         const sendMailPromise = new Promise((resolve, reject) => {
             transporter.sendMail(mailOptions, (error, info) => {
                 if (error) {

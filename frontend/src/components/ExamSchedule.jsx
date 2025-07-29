@@ -13,7 +13,6 @@ export default function ExamSchedule() {
     const [loading, setLoading] = useState(true);
     const [exams, setExams] = useState([]);
     const [toggle, setToggle] = useState(false); 
-    const [subjects, setSubjects] = useState([]);
     
     const semRef = useRef();
     const formRef = useRef();
@@ -116,22 +115,22 @@ export default function ExamSchedule() {
 
         console.log(subInfo);
 
-        const getSubcode = async () => {
-            try {
-                const response = await axiosPrivate.get(url, {
-                    params: subInfo,
-                    signal: controller.signal
-                });
-                if (isMounted) {
-                    console.log(response.data);
-                    setSubjects(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        // const getSubcode = async () => {
+        //     try {
+        //         const response = await axiosPrivate.get(url, {
+        //             params: subInfo,
+        //             signal: controller.signal
+        //         });
+        //         if (isMounted) {
+        //             console.log(response.data);
+        //             setSubjects(response.data);
+        //         }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
 
-        getSubcode();
+        // getSubcode();
 
         return () => {
             isMounted = false;
@@ -147,22 +146,22 @@ export default function ExamSchedule() {
 
         console.log(subInfo);
 
-        const getSubcode = async () => {
-            try {
-                const response = await axiosPrivate.get(url, {
-                    params: subInfo,
-                    signal: controller.signal
-                });
-                if (isMounted) {
-                    console.log(response.data);
-                    setSubjects(response.data);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        }
+        // const getSubcode = async () => {
+        //     try {
+        //         const response = await axiosPrivate.get(url, {
+        //             params: subInfo,
+        //             signal: controller.signal
+        //         });
+        //         if (isMounted) {
+        //             console.log(response.data);
+        //             setSubjects(response.data);
+        //         }
+        //     } catch (error) {
+        //         console.log(error);
+        //     }
+        // }
 
-        getSubcode();
+        // getSubcode();
 
         const getSchedule = async () => {
             try {
@@ -227,7 +226,6 @@ export default function ExamSchedule() {
                     if (error.name === 'CanceledError' || error.name === 'AbortError'){
                         console.log('Request canceled');
                     }else{
-                      console.error(error);
                       alert("Failed to delete the schedule.");
                     }
                     setLoading(false);
@@ -260,10 +258,11 @@ export default function ExamSchedule() {
 
                 <div className="flex flex-row justify-center items-center mt-6">
                     <h2 className="text-xl font-bold"><span className="whitespace-nowrap">EXAMINEE DETAILS</span></h2>
-                    <input type="file" id="myFiles" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple className="font-regular ml-5" />
-                    <button className="bg-green-500 hover:bg-green-400 text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleFiles}>UPLOAD FILE</button>
+                    <input type="file" id="myFiles" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple className="font-regular ml-5 rounded-[20px] shadow-sm border-gray-300 px-3 py-2 mr-5  hover:bg-[var(--blue-login)] hover:text-white" />
+                    <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleFiles}>UPLOAD FILE</button>
                 </div>
             </div>
+             
 
             <div className="px-8 pt-6 my-1">
                 <h2 className="text-xl font-bold mb-3">ADD SLOTS</h2>
@@ -271,8 +270,8 @@ export default function ExamSchedule() {
                     <Input input_id="date" title="Date" inputRef={dateRef} type="date" placeholder="Enter Exam Date" />
                     <Dropdown input_id="branch" title="Branches" inputRef={branchRef} options={['CSE', 'ECE', 'EE', 'ME', 'CE', 'CHE', 'BT', 'ECM', 'PIE']} isTarget handleSlot={handleSlot} />
                     <Dropdown input_id="slot" title="Slot" inputRef={slotRef} options={['morning' , 'afternoon']} isTarget handleSlot={handleSlot} />
-                    <Dropdown input_id="subject" title="Subject" inputRef={subRef} options={subjects} />
-                    <button className="bg-blue-500 hover:bg-blue-400 text-white font-bold py-1 px-2 my-7 mx-2 h-10 w-[5rem] rounded-[20px]" type="submit">ADD</button>
+                    <Input input_id="subject" title="Subject" inputRef={subRef} type="string" placeholder="Enter subject code" />
+                    <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold py-1 px-2 my-7 mx-2 h-10 w-[5rem] rounded-[20px]" type="submit">ADD</button>
                 </form>
             </div>
 
@@ -329,7 +328,7 @@ export default function ExamSchedule() {
                     </div>
                     <div className="flex flex-row gap-10">
                         <button className="bg-gray-500 hover:bg-gray-400 text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleClearall}>CLEAR ALL</button>
-                        <button className="bg-green-500 hover:bg-green-400 text-white  h-10 w-[10rem] rounded-[20px] font-bold" onClick={handleNext}>NEXT</button>
+                        <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleNext}>NEXT</button>
                     </div>
                 </div>
             </div>

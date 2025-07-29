@@ -4,7 +4,6 @@ import { fileExists } from '../middlewares/fileexists.js';
 import { extensionLimiter } from '../middlewares/extensionlimiter.js';
 import { sizeLimiter } from '../middlewares/sizelimiter.js';
 import {
-  getSubcode,
   addSchedule,
   uploadFile,
   viewSchedules,
@@ -12,7 +11,7 @@ import {
 } from '../controllers/schedule.controller.js';
 const router = express.Router();
 
-router.get('/', getSubcode)
+router
       .post('/', addSchedule)
       .post('/file-upload', fileUpload({ createParentPath: true }),
         fileExists,
