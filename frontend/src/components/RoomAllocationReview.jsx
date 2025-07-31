@@ -208,7 +208,7 @@ export default function RoomAllocationReview() {
 
         
 
-        <div className="flex flex-row mt-6 items-center justify-center">
+        <div className="flex flex-row mt-6 items-center">
           <h2 className="text-xl font-bold"><span className="whitespace-nowrap">EXAMS SCHEDULED</span></h2>
           <select ref={examRef} className="h-10 px-3 py-2 ml-4 rounded-[20px] shadow-sm border-gray-300 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)]">
             

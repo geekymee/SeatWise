@@ -225,7 +225,7 @@ export default function ExamSchedule() {
                     </select>
                 </div>
 
-                <div className="flex flex-row justify-center items-center mt-6">
+                <div className="flex flex-row items-center mt-6">
                     <h2 className="text-xl font-bold"><span className="whitespace-nowrap">EXAMINEE DETAILS</span></h2>
                     <input type="file" id="myFiles" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" multiple className="font-regular ml-5 rounded-[20px] shadow-sm border-gray-300 px-3 py-2 mr-5  hover:bg-[var(--blue-login)] hover:text-white" />
                     <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold h-10 w-[10rem] rounded-[20px]" onClick={handleFiles}>UPLOAD FILE</button>

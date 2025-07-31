@@ -60,7 +60,7 @@ def main():
                 room_name = room["room"]
                 capacity = room["capacity"]
                 ws = wb_output.create_sheet(title=room_name)
-                ws.append(["Seat_no", "Student_name", "Reg_No", "Branch", "Sub_code"])
+                ws.append(["Seat_no", "Student_name", "Reg_No", "Subject_Code", "Branch"])
                 
                 row = 2  
                 seat_no = 1
