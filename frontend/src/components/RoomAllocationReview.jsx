@@ -16,18 +16,15 @@ export default function RoomAllocationReview() {
   const [selectedRooms, setSelectedRooms] = useState([]);
   const [bookedRooms, setBookedRooms] = useState([]);
   const [studentsCount, setStudentsCount] = useState(0);
-  const [searchTerm, setSearchTerm] = useState("");
   const [sortTerm, setSortTerm] = useState("");
   const dateRef = useRef();
   const examRef = useRef();
   const [seatSelected, setSeatSelected] = useState(0);
   let totalCapacity = rooms.reduce((total, obj) => total + obj.capacity, 0);
-
+  
   const filteredRooms = useMemo(() => {
     let list = rooms;
-    if (list.length > 0 && searchTerm) {
-      list = list.filter((item) => item.room_no.slice(0, searchTerm.length) === searchTerm.toUpperCase());
-    }
+    
     if (list.length > 0 && sortTerm) {
       if (sortTerm === "min") list = list.sort((a, b) => { return a.capacity - b.capacity });
       if (sortTerm === "max") list = list.sort((a, b) => { return b.capacity - a.capacity });
@@ -35,7 +32,7 @@ export default function RoomAllocationReview() {
       if (sortTerm === "desc") list = list.sort((a, b) => { return b.room_no.slice(-3) - a.room_no.slice(-3) });
     }
     return list;
-  }, [searchTerm, sortTerm, rooms]);
+  }, [ sortTerm, rooms]);
 
   const handleExcels = async () => {
     setLoading(true);
@@ -211,10 +208,10 @@ export default function RoomAllocationReview() {
 
         
 
-        <div className="flex flex-row mt-6 items-center">
+        <div className="flex flex-row mt-6 items-center justify-center">
           <h2 className="text-xl font-bold"><span className="whitespace-nowrap">EXAMS SCHEDULED</span></h2>
           <select ref={examRef} className="h-10 px-3 py-2 ml-4 rounded-[20px] shadow-sm border-gray-300 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)]">
-            console.log(exams);
+            
             {exams.map(item => <option key={item} value={item}>{item}</option>)}
           </select>
         </div>
@@ -225,23 +222,7 @@ export default function RoomAllocationReview() {
         <div className="flex flex-row hw:flex-col st:mb-3">
           <div className="flex-grow flex flex-col relative">
             <div className="flex flex-row justify-between items-center bg-gray-100 px-4 py-3 rounded-t-2xl font-regular">
-              {/* <div className="flex-grow flex flex-row items-center ">
-                <span className="ml-2 text-gray-500 flex-none">
-                  <svg viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6">
-                    <path
-                      fillRule="evenodd"
-                      d="M8.5 15a6.5 6.5 0 100-13 6.5 6.5 0 000 13zm5.057-1.54l4.442 4.442a1 1 0 11-1.414 1.414l-4.442-4.442a7 7 0 111.414-1.414z"
-                      clipRule="evenodd"
-                    />
-                  </svg>
-                </span> 
-                <input
-                  type="text"
-                  placeholder="Search by Room No"
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="w-full p-2 mx-2 my-1 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
-                />
-              </div> */}
+              
               <div className="flex-grow flex flex-row items-center ">
                 <p className="ml-2 whitespace-nowrap">Sort By :</p>
                 <select className="w-full p-2 mx-2 my-1 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"

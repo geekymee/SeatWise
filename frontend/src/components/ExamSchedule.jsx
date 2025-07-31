@@ -115,22 +115,6 @@ export default function ExamSchedule() {
 
         console.log(subInfo);
 
-        // const getSubcode = async () => {
-        //     try {
-        //         const response = await axiosPrivate.get(url, {
-        //             params: subInfo,
-        //             signal: controller.signal
-        //         });
-        //         if (isMounted) {
-        //             console.log(response.data);
-        //             setSubjects(response.data);
-        //         }
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-
-        // getSubcode();
 
         return () => {
             isMounted = false;
@@ -146,22 +130,7 @@ export default function ExamSchedule() {
 
         console.log(subInfo);
 
-        // const getSubcode = async () => {
-        //     try {
-        //         const response = await axiosPrivate.get(url, {
-        //             params: subInfo,
-        //             signal: controller.signal
-        //         });
-        //         if (isMounted) {
-        //             console.log(response.data);
-        //             setSubjects(response.data);
-        //         }
-        //     } catch (error) {
-        //         console.log(error);
-        //     }
-        // }
-
-        // getSubcode();
+        
 
         const getSchedule = async () => {
             try {
@@ -241,10 +210,10 @@ export default function ExamSchedule() {
 
     return (
         <div className="bg-[var(--background)] flex flex-col flex-grow md:w-5/6">
-            <div className="px-8 pt-4 flex flex-row justify-between flex-wrap">
+            <div className="bg-[var(--background)] px-8 pt-4 flex flex-col st:flex-row justify-between">
                 <div className="flex flex-row mt-6 items-center">
                     <h2 className="text-xl font-bold"><span className="whitespace-nowrap">SELECT SEMESTER</span></h2>
-                    <select ref={semRef} className="h-10 px-3 py-2 ml-5 rounded-[20px] shadow-sm border-gray-300 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-[var(--bule-save)]" onChange={handleSlot}>
+                    <select ref={semRef} className="h-10 px-3 py-2 ml-5 rounded-[20px] shadow-sm border-gray-300 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)]" onChange={handleSlot}>
                         <option value="1">Semester 1</option>
                         <option value="2">Semester 2</option>
                         <option value="3">Semester 3</option>
@@ -264,7 +233,7 @@ export default function ExamSchedule() {
             </div>
              
 
-            <div className="px-8 pt-6 my-1">
+            <div className="flex flex-col m-8 mt-10">
                 <h2 className="text-xl font-bold mb-3">ADD SLOTS</h2>
                 <form ref={formRef} className="flex flex-col st:flex-row justify-between" onSubmit={handleSchedule}>
                     <Input input_id="date" title="Date" inputRef={dateRef} type="date" placeholder="Enter Exam Date" />

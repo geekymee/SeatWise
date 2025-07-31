@@ -1,12 +1,6 @@
 @import "tailwindcss";
 
-@layer base{
-    input[type="number"]::-webkit-inner-spin-button,
-    input[type="number"]::-webkit-outer-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-}
+
 :root {
 
   --blue-login: #6EACDA;
@@ -49,4 +43,10 @@ input[type='password']::-webkit-credentials-auto-fill-button,
 input[type='password']::-webkit-clear-button,
 input[type='password']::-webkit-inner-spin-button {
   display: none !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
 }

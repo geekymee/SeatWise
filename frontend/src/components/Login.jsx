@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from '../api/axios';
 import useAuth from "../hooks/useAuth";
 import '../app.css';
-import backgroundimg from "../assets/backgroundimage.jpg"
+import backgroundimg from "../assets/backgroundimage.jpg";
 
 const LOGIN_URL = '/auth';
 
@@ -30,13 +30,10 @@ export default function Login() {
         setErrMsg('');
     }, [user, pwd])
 
-    const toggleShowPwd = () => {
-        setShowPwd(!showPwd);
-    };
+    const toggleShowPwd = () => setShowPwd(prev => !prev);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         try {
             const response = await axios.post(LOGIN_URL,
                 JSON.stringify({ user, pwd }),
@@ -45,7 +42,6 @@ export default function Login() {
                     withCredentials: true
                 }
             );
-            console.log(JSON.stringify(response?.data));
             const accessToken = response?.data?.accessToken;
             setAuth({ user, accessToken });
             setUser('');
@@ -63,73 +59,71 @@ export default function Login() {
             }
             errRef.current.focus();
         }
-    }
-
+    };
 
     return (
-        <div className="flex flex-row items-center justify-between h-screen bg-no-repeat bg-cover bg-center" 
-            style={{ backgroundImage: `url(${backgroundimg})` }}>
-            <div>
-                <h1>.</h1>
-            </div>
-            <div className="flex flex-col items-center justify-center h-screen w-[25rem] px-14 shadow-black shadow-md bg-[var(--blue-save)]">
-                <div className="flex flex-col items-center justify-center h-screen w-full">
-                    <h1 className="text-3xl text-center text-white tracking-wide  mb-10 font-medium">LOG IN</h1>
-                    <div className={errMsg ? "flex flex-rows items-center p-2 h-10 w-full border border-red-700 rounded-[10px] bg-red-200 text-red-700  mb-2" : "h-0 w-0 absolute left-[-9999px]"}>
-                        <FontAwesomeIcon icon={faExclamationCircle} className="h-4 p-2" />
-                        <p ref={errRef} className="font-regular text-sm pl-1" aria-live="assertive">{errMsg}</p>
-                    </div>
-                    <form className="space-y-6 w-full" onSubmit={handleSubmit}>
-                        <div>
-                            <label className="text-white tracking-wide font-medium mb-2" htmlFor="username">Username</label>
-                            <input
-                                className="mt-2 w-full h-12 px-3 py-2 rounded-[10px] shadow-sm focus:outline-none focus:ring focus:ring-white focus:ring-opacity-40"
-                                type="text"
-                                id="username"
-                                ref={userRef}
-                                autoComplete="off"
-                                onChange={(e) => setUser(e.target.value)}
-                                value={user}
-                                required
-                                placeholder="Enter your username"
-                                spellCheck="false" />
-                        </div>
-                        <div>
-                            <label className="text-white tracking-wide font-medium mb-2" htmlFor="password">Password</label>
-                            <div className={`mt-2 flex flex-row items-center w-full h-12 rounded-[10px] shadow-sm ${pwdFocus ? "ring ring-white ring-opacity-40" : ""}`}>
-                                <input
-                                    className="h-12 w-full px-3 py-2 rounded-l-[10px] outline-none"
-                                    type={showPwd ? 'text' : 'password'}
-                                    id="password"
-                                    onChange={(e) => setPwd(e.target.value)}
-                                    onFocus={() => setPwdFocus(true)}
-                                    onBlur={() => setPwdFocus(false)}
-                                    value={pwd}
-                                    required
-                                    placeholder="Enter your password" />
-                                <div className="flex bg-[var(--blue-medium)] w-10 h-12 rounded-r-[10px] items-center justify-center">
-                                    <FontAwesomeIcon icon={showPwd ? faEyeSlash : faEye} className="text-white  cursor-pointer border-white" onClick={toggleShowPwd} />
-                                </div>
-                            </div>
-                        </div>
-                        <div className="flex justify-center items-center pt-3 ">
-                            <button
-                                className="border bg-var(--blue-save) tracking-wider hover:bg-opacity-25  hover:bg-[var(--blue-dark)]  hover:border-[var(--blue-dark)]  text-white font-bold py-3 px-7 rounded-[30px] focus:outline-none focus:shadow-outline select-none"
-                                type="submit">
-                                Sign In
-                            </button>
-                        </div>
-                    </form>
-                </div>
-                <div className="flex items-center justify-center mb-10 gap-2 select-none">
-                    <p>
-                        Don't have an account?
-                    </p>
-                    <span className="block hover:text-black hover:underline">
-                        <Link to="/register">Sign Up</Link>
-                    </span>
+        <div
+            className="relative min-h-screen bg-cover bg-center bg-no-repeat "
+            style={{ backgroundImage: `url(${backgroundimg})`}}
+        >
+
+            <div className="absolute inset-0 bg-black/55 z-0" />
+
+            <div className="absolute top-1/2 left-1/2 z-10 transform -translate-x-1/2 -translate-y-1/2 w-full max-w-md bg-[var(--blue-save)] rounded-xl shadow-xl border border-gray-600 px-8 py-12 min-h-[28rem]">
+
+                <h1 className="text-3xl font-medium text-center text-[var(--blue-dark)] mb-6">LOG IN</h1>
+
+                <div className={errMsg ? "flex items-center bg-red-100 text-red-700 border border-red-500 p-2 rounded-md mb-4" : "hidden"}>
+                    <FontAwesomeIcon icon={faExclamationCircle} className="mr-2" />
+                    <p ref={errRef} className="text-sm" aria-live="assertive">{errMsg}</p>
                 </div>
 
+                <form onSubmit={handleSubmit} className="space-y-5">
+                    <div>
+                        <label htmlFor="username" className="block text-sm font-medium text-[var(--blue-dark)]">Username</label>
+                        <input
+                            type="text"
+                            id="username"
+                            ref={userRef}
+                            autoComplete="off"
+                            value={user}
+                            onChange={(e) => setUser(e.target.value)}
+                            required
+                            placeholder="Enter your username"
+                            className="w-full mt-2 px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-dark)]"
+                        />
+                    </div>
+
+                    <div>
+                        <label htmlFor="password" className="block text-sm font-medium text-[var(--blue-dark)]">Password</label>
+                        <div className={`flex items-center mt-2 border rounded-md ${pwdFocus ? 'ring-2 ring-[var(--blue-dark)]' : ''}`}>
+                            <input
+                                type={showPwd ? 'text' : 'password'}
+                                id="password"
+                                value={pwd}
+                                onChange={(e) => setPwd(e.target.value)}
+                                onFocus={() => setPwdFocus(true)}
+                                onBlur={() => setPwdFocus(false)}
+                                required
+                                placeholder="Enter your password"
+                                className="w-full px-4 py-2 rounded-l-md focus:outline-none"
+                            />
+                            <div className="w-12 h-12 flex items-center justify-center bg-[var(--blue-medium)] rounded-r-md cursor-pointer" onClick={toggleShowPwd}>
+                                <FontAwesomeIcon icon={showPwd ? faEyeSlash : faEye} className="text-white h-5" />
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <button type="submit" className="w-full py-3 bg-[var(--blue-medium)] hover:bg-[var(--blue-dark)] text-white font-semibold rounded-lg transition duration-300">
+                        Sign In
+                    </button>
+                </form>
+
+                <div className="text-center text-sm text-gray-800 mt-4">
+                    Don't have an account?
+                    <Link to="/register" className="text-[var(--blue-dark)] hover:underline ml-1">Sign Up</Link>
+                </div>
             </div>
         </div>
     );
