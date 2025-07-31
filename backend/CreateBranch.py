@@ -8,27 +8,6 @@ def load_input_files():
     data = json.load(sys.stdin)
     return data
    
-    
-# def get_subjectCode(ws):
-#     print("Sheet columns:", [cell.value for cell in next(ws.iter_rows(min_row=1, max_row=1))])
-#     header = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
-#     col_map = {col_name.strip(): idx for idx, col_name in enumerate(header) if col_name}
-#     print("Column map:", col_map)
-    
-    
-#     if 'Subject Code' not in col_map:
-#         raise ValueError("Missing 'Subject Code' column in the sheet.")
-    
-#     subjectCode_col_idx = col_map['Subject Code'] + 1 
-
-#     subjectCodes = set()
-#     for row in ws.iter_rows(min_row=2, min_col=subjectCode_col_idx, max_col=subjectCode_col_idx, values_only=True):
-#         val = row[0]
-#         if val and val != 'Branch Name':
-#             subjectCodes.add(val.strip())
-#     print(f"subjectCodes: {subjectCodes}")
-#     return list(subjectCodes)
-
 def get_branch_names(ws):
     header = next(ws.iter_rows(min_row=1, max_row=1, values_only=True))
     col_map = {col_name.strip(): idx for idx, col_name in enumerate(header) if col_name}
@@ -92,9 +71,7 @@ def create_slot_sheets(wb, temp_ws, codeno):
     slot_data = {}
     raw_slots = []
     for row in temp_ws.iter_rows(min_row=1, values_only=True):
-        print({row})
         raw_value = row[slot_col-1]
-        print(f"[DEBUG] Raw Slot Column Data: {raw_value}")
         if raw_value:
             normalized = str(raw_value).strip().capitalize()
             raw_slots.append(normalized)
@@ -102,53 +79,20 @@ def create_slot_sheets(wb, temp_ws, codeno):
     slots = sorted(set(raw_slots))
 
     for slot in slots:
-        regular = wb.create_sheet(slot)
-        supply = None
+        
+        sheet = wb.create_sheet(slot)
+        r = 1
 
-        regnos = set()
         
         for row in temp_ws.iter_rows(min_row=1, values_only=True):
             current_slot = str(row[slot_col - 1]).strip().capitalize()
             if current_slot == slot:
-                reg = row[regno_col - 1]
-                regnos.add(reg)
+                for c, val in enumerate((row[0], row[regno_col - 1], current_slot, row[subcode_col - 1]), 1):
+                    sheet.cell(row=r, column=c).value = val
+                r += 1
         
-        regnos = sorted(regnos)
-        
-        years = set()
-
-        for reg in regnos:
-            reg_str = str(reg)
-            if len(reg_str) >= 4 and reg_str[2:4].isdigit():
-                years.add(int(reg_str[2:4]))
-
-        years = sorted(years)
-
-        
-        if len(years) > 1:
-            supply = wb.create_sheet(slot + "_supply")
-
-        r_reg, r_sup = 1, 1
-
-        for row in temp_ws.iter_rows(min_row=1, values_only=True):
-            current_slot = str(row[slot_col - 1]).strip().capitalize()
-            if current_slot == slot:
-                reg = row[regno_col - 1]
-                year = int(str(reg)[2:4]) if str(reg)[2:4].isdigit() else None
-                
-
-                target_ws = regular if year == years[-1] else supply
-                if target_ws:
-                    row_index = r_reg if target_ws == regular else r_sup
-                    for c, val in enumerate((row[0], reg, row[slot_col - 1], row[subcode_col - 1]), 1):
-                        target_ws.cell(row=row_index, column=c).value = val
-
-                    if target_ws == regular:
-                        r_reg += 1
-                    else:
-                        r_sup += 1
-
-        slot_data[codeno + slot] = r_reg - 1  
+       
+        slot_data[codeno + slot] = r - 1  
 
     return slot_data
 

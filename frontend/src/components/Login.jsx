@@ -46,7 +46,6 @@ export default function Login() {
                 }
             );
             console.log(JSON.stringify(response?.data));
-            //console.log(JSON.stringify(response));
             const accessToken = response?.data?.accessToken;
             setAuth({ user, accessToken });
             setUser('');

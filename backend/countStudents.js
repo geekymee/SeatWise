@@ -1,7 +1,6 @@
 import { spawn } from 'node:child_process';
 
 const totalCount = async (data) => {
-    console.log(data);
     return new Promise((resolve, reject) => {
         const pythonProcess = spawn('python', ['countStudents.py']);
 

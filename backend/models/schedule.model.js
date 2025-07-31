@@ -24,7 +24,6 @@ const ScheduleSchema = new mongoose.Schema({
         type: String,
         required: [true, 'Provide slot info'],
     },
-
     subcode: {
         type: String,
         required: [true, 'Provide subcode info'],

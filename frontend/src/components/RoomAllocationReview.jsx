@@ -21,9 +21,7 @@ export default function RoomAllocationReview() {
   const dateRef = useRef();
   const examRef = useRef();
   const [seatSelected, setSeatSelected] = useState(0);
-
   let totalCapacity = rooms.reduce((total, obj) => total + obj.capacity, 0);
-  
 
   const filteredRooms = useMemo(() => {
     let list = rooms;
@@ -50,10 +48,12 @@ export default function RoomAllocationReview() {
     }
     catch (error) {
       console.log(error);
+      setLoading(false);
     }
   }
 
   const handleRooms = async () => {
+    console.log("handle rooms", selectedRooms);
     setLoading(true);
     const controller = new AbortController();
 
@@ -70,15 +70,17 @@ export default function RoomAllocationReview() {
       }, []),
       details
     };
-    console.log(payload);
+    
     try {
-      await axiosPrivate.post(url.concat("/room-allocation-review"), payload, {
+      await axiosPrivate.post(url.concat("/allocation"), payload, {
         signal: controller.signal
       });
+      setLoading(false);
       alert("Arrangement successful for exams on " + date );
       window.location.reload();
     } catch (error) {
       console.log(error);
+      setLoading(false);
     }
 
     return () => {
@@ -112,16 +114,19 @@ export default function RoomAllocationReview() {
           params: { date },
           signal: controller.signal
         });
-
+        console.log(bookedRoomsResponse.data);
         if (isMounted) {
           setBookedRooms(bookedRoomsResponse.data.rooms);
           setSelectedRooms([]);
           setSeatSelected(bookedRoomsResponse.data.seats);
-          setLoading(false);
+          
         }
+        setLoading(false);
       }
+
       catch (error) {
         console.log(error);
+        setLoading(false);
       }
     }
 
@@ -146,8 +151,9 @@ export default function RoomAllocationReview() {
       } catch (error) {
         console.log(error);
       }
+      setLoading(false);
     }
-
+    console.log("get rooms");
     getRooms();
     
     const getDates = async () => {
@@ -208,6 +214,7 @@ export default function RoomAllocationReview() {
         <div className="flex flex-row mt-6 items-center">
           <h2 className="text-xl font-bold"><span className="whitespace-nowrap">EXAMS SCHEDULED</span></h2>
           <select ref={examRef} className="h-10 px-3 py-2 ml-4 rounded-[20px] shadow-sm border-gray-300 min-w-[200px] focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)]">
+            console.log(exams);
             {exams.map(item => <option key={item} value={item}>{item}</option>)}
           </select>
         </div>
@@ -218,9 +225,8 @@ export default function RoomAllocationReview() {
         <div className="flex flex-row hw:flex-col st:mb-3">
           <div className="flex-grow flex flex-col relative">
             <div className="flex flex-row justify-between items-center bg-gray-100 px-4 py-3 rounded-t-2xl font-regular">
-              {/* Search Bar */}
-              <div className="mr-4 flex flex-row items-center w-full">
-                <span className="text-gray-500">
+              {/* <div className="flex-grow flex flex-row items-center ">
+                <span className="ml-2 text-gray-500 flex-none">
                   <svg viewBox="0 0 20 20" fill="currentColor" className="w-6 h-6">
                     <path
                       fillRule="evenodd"
@@ -228,18 +234,17 @@ export default function RoomAllocationReview() {
                       clipRule="evenodd"
                     />
                   </svg>
-                </span>
+                </span> 
                 <input
                   type="text"
-                  id="search"
+                  placeholder="Search by Room No"
                   onChange={(e) => setSearchTerm(e.target.value)}
-                  className="p-2 ml-2 flex-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
-                  placeholder="Search"
+                  className="w-full p-2 mx-2 my-1 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
                 />
-              </div>
+              </div> */}
               <div className="flex-grow flex flex-row items-center ">
                 <p className="ml-2 whitespace-nowrap">Sort By :</p>
-                <select className="min-w-[156px] p-[10.4px] m-1 rounded-md focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
+                <select className="w-full p-2 mx-2 my-1 rounded-md shadow-sm border-gray-300 focus:outline-none focus:ring-2 focus:ring-[var(--blue-save)] text-gray-600"
                   defaultValue="min" onChange={(e) => setSortTerm(e.target.value)}>
                   <option value="min">Increasing capacity</option>
                   <option value="max">Decreasing capacity</option>
@@ -249,6 +254,7 @@ export default function RoomAllocationReview() {
               </div>
             </div>
             <div className={`bg-gray-100 h-[21.5rem] overflow-y-auto rounded-b-2xl p-4 w-full ${studentsCount === 0 && "pointer-events-none"}`}>
+              
               {loading ? (<ThreeCircles
                 height="65"
                 width="65"
@@ -269,8 +275,8 @@ export default function RoomAllocationReview() {
             <ul className="pl-3 hw:pb-5 mt-4 font-regular">
               <li className="p-3">Total Rooms : {rooms.length}</li>
               <li className="p-3">Available Seats : {bookedRooms.length > 0 ? 0 : totalCapacity - seatSelected}</li>
-              <li className={`p-3 ${seatSelected < studentsCount && seatSelected !== 0 ? "text-red-500" : ""} ${seatSelected < studentsCount ? "" : "text-[var(--blue-medium)]"} `}>Rooms Selected : {bookedRooms.length > 0 ? bookedRooms.length : selectedRooms.length}</li>
-              <li className={`p-3 ${seatSelected < studentsCount && seatSelected !== 0 ? "text-red-500" : ""} ${seatSelected < studentsCount ? "" : "text-[var(--blue-medium)]"} `}>Seats Selected : {seatSelected} </li>
+              <li className={`p-3 ${seatSelected < studentsCount && seatSelected !== 0 ? "text-red-600" : ""} ${seatSelected < studentsCount ? "" : "text-green-600"} `}>Rooms Selected : {bookedRooms.length > 0 ? bookedRooms.length : selectedRooms.length}</li>
+              <li className={`p-3 ${seatSelected < studentsCount && seatSelected !== 0 ? "text-red-600" : ""} ${seatSelected < studentsCount ? "" : "text-green-600"} `}>Seats Selected : {seatSelected} </li>
               <li className="p-3">Total Participants : {studentsCount}</li>
             </ul>
           </div>
@@ -282,8 +288,8 @@ export default function RoomAllocationReview() {
           <div>
           </div>
           <div className="flex flex-row gap-10">
-            <button className="bg-green-500 hover:bg-green-400 text-white font-bold h-10 w-[10rem] rounded-[20px]" type="button" onClick={handleRooms}>ARRANGE</button>
-            <button className="bg-green-medium hover:bg-green-light text-white font-bold h-10 w-[10rem] rounded-[20px]" type="button" onClick={handleExcels}>RECEIVE MAIL</button>
+            <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold h-10 w-[10rem] rounded-[20px]" type="button" onClick={handleRooms}>ARRANGE</button>
+            <button className="bg-[var(--blue-medium)] hover:bg-[var(--blue-light)] text-white font-bold h-10 w-[10rem] rounded-[20px]" type="button" onClick={handleExcels}>RECEIVE MAIL</button>
           </div>
         </div>
       </div>

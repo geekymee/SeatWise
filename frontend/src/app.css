@@ -17,6 +17,7 @@
   --grey-all: #BECCCF;
   --red-download: #DD7A96;
   --background: #BBE1FA;
+  --blue-selected: #59b6d0;
 
   --letter-spacing-needed: 0.09em;
 
@@ -38,4 +39,14 @@
 
 .container {
   background-color: var(--background);
+}
+input::-ms-reveal,
+input::-ms-clear {
+  display: none;
+}
+
+input[type='password']::-webkit-credentials-auto-fill-button,
+input[type='password']::-webkit-clear-button,
+input[type='password']::-webkit-inner-spin-button {
+  display: none !important;
 }

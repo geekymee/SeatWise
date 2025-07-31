@@ -7,7 +7,6 @@ def main():
     sys.stdout.flush()
     try : 
         data_json = sys.stdin.read()
-        print(f"Raw stdin: {data_json}", file=sys.stderr)
         data = json.loads(data_json)
 
         details = data['details']
@@ -28,25 +27,16 @@ def main():
                             if slot_lc in sheetnames_lc_map:
                                 ws_main = wb[sheetnames_lc_map[slot_lc]]
                                 total_students += ws_main.max_row - 1
-                            else:
-                                print(f"[WARN] Slot sheet '{slot}' not found in {file_path}")
-
-                            supply_sheet_lc = f"{slot}_supply".lower()
-                            if supply_sheet_lc in sheetnames_lc_map:
-                                ws_supply = wb[sheetnames_lc_map[supply_sheet_lc]]
-                                total_students += ws_supply.max_row - 1
-                            else:
-                                print(f"[WARN] Supply sheet '{slot}_supply' not found in {file_path}")
+                            
                         except Exception as e:
                             print(f"Error opening {file_path}: {e}", file=sys.stderr)
                             sys.exit(1)
         assigned_students = 0
         rooms_used = []
-        print(f"Rooms: {rooms}", file=sys.stderr)
         for room in rooms:
             if assigned_students >= total_students:
                 break
-            room_name = room.get("room")
+            room_name = room.get("room_no")
             capacity = room.get("capacity", 0)
             assigned_students += capacity
             rooms_used.append({
@@ -60,7 +50,7 @@ def main():
         "total_students": total_students,
         "rooms_used": rooms_used
         }
-        print(json.dumps(output))
+        print(json.dumps(total_students))
 
           
     except Exception as e:

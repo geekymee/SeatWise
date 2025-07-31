@@ -7,28 +7,14 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// export const getSubcode = async (req, res) => {
-//     const { sem, branch, slot } = req.query;
-//     console.log("Query Params:", req.query);
-//     if (!branch || !slot) return res.status(400).json({ 'message': 'provide branch and slot' });
-//     try {
-//         const slots = await Slot.findOne({ sem, branch, slot }, { subcode: 1, _id: 0 });
-//         console.log(slot)
-//         res.send(slots?.subcode || []);
-//     } catch (error) {
-//         console.log(error);
-//         res.status(500).json({ 'message': error.message });
-//     }
-// };
-
 export const addSchedule = async (req, res) => {
-    const { sem, date, time, branch, slot, subcode } = req.body;
+    const { sem, date, branch, slot, subcode } = req.body;
     const user = req.user.username;
     
     try {
         const existingSchedule = await Schedule.findOne({ 
             $or: [
-                { user, sem, date, time, branch, slot, subcode },
+                { user, sem, date, branch, slot, subcode },
                 { user, sem, date, branch }
             ] 
         });
@@ -36,7 +22,7 @@ export const addSchedule = async (req, res) => {
             return res.status(409).send('Schedule already exists');
         }
 
-        const createdSchedule = await Schedule.create({ user, sem, date, time, branch, slot, subcode });
+        const createdSchedule = await Schedule.create({ user, sem, date, branch, slot, subcode });
         const formattedDate = createdSchedule.date.toLocaleDateString('en-GB');
         res.status(201).send({ ...createdSchedule._doc, date: formattedDate });
     } catch (error) {
@@ -77,6 +63,7 @@ export const deleteSchedule = async (req, res) => {
         res.status(400).send(error);
     }
 }
+
 
 export const uploadFile = async (req, res) => {
     const files = req.files;

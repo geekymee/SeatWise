@@ -213,20 +213,20 @@ export default function ExamSchedule() {
         if (confirmBox) {
             setLoading(true);
             const controller = new AbortController();
-          
             const deleteSchedule = async () => {
                 try {
                     for (const exam of exams) {
                         await axiosPrivate.delete(`${url}/${exam._id}`, { signal: controller.signal });
                     }
-                    setRows([]);  
+                    setExams([]);  
                     setLoading(false);
                     alert("The schedule has been deleted.");
                 }catch (error) {
                     if (error.name === 'CanceledError' || error.name === 'AbortError'){
                         console.log('Request canceled');
                     }else{
-                      alert("Failed to delete the schedule.");
+                        
+                        alert("Failed to delete the schedule.");
                     }
                     setLoading(false);
                 }

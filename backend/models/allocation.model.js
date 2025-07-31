@@ -11,10 +11,6 @@ const AllocationSchema = new mongoose.Schema({
         required: [true, 'Provide Date'],
         
     },
-    time: {
-        type: String,
-        required: [true, 'Provide Time'],
-    },
     rooms: {
         type: [{ room_no: String, capacity: Number }],
         required: [true, 'Provide room array'],

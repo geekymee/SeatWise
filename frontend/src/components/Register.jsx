@@ -8,7 +8,7 @@ import backgroundimg from "../assets/backgroundimage.jpg"
 
 const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PWD_REGEX = /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
-const MAIL_REGEX = /^[A-Za-z0-9]+@mnnit\.ac\.in$/;
+const MAIL_REGEX = /^[A-Za-z0-9._]+@mnnit\.ac\.in$/;
 const REGISTER_URL = '/register';
 
 const Register = () => {
@@ -87,8 +87,7 @@ const Register = () => {
             );
             console.log(response?.data);
             navigate('/');
-            //clear state and controlled inputs
-            //need value attrib on inputs for this
+            
             setUser('');
             setPwd('');
             setMatchPwd('');

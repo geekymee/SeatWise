@@ -11,8 +11,8 @@ import countStudents from '../countStudents.js'
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const directoryPath = path.resolve(__dirname, '../updatedExcels');
-const fileNameRegex = /^([0][1-9]|[12][0-9]|3[01])-([0][1-9]|[1][0-2])+-([0-9]{4})+_[FA]N\.xlsx$/;
+const directoryPath = path.resolve(__dirname, '../output');
+const fileNameRegex = /^Seating_Sem\d+_Slot_(morning|afternoon)\.xlsx$/;
 
 export const getDates = async (req, res) => {
     const user = req.user.username;
@@ -36,23 +36,26 @@ export const getDates = async (req, res) => {
 export const getExams = async (req, res) => {
     const { date } = req.query;
     console.log(req.query);
-    const user = req.user.username._id || req.user._id; 
+    const user = req.user?._id; 
+    console.log("user", user);
     if (!date ) {
         return res.status(400).json({ 'message': 'provide date ' });
     }
+     
 
     try {
         const formattedDate = date.split('-').reverse().join('-');
         const dateObject = new Date(formattedDate).toISOString();
-
-        const schedules = await Schedule.find({ date: dateObject, user: user }).select('sem branch slot subcode').lean();
+        console.log("date",dateObject);
+        const schedules = await Schedule.find({ date: dateObject, user: req.user.username }).select('sem branch slot subcode').lean();
         const rooms = await Room.find({ user }).select('room_no capacity');
         const exams = schedules.reduce((acc, { sem, branch, slot }) => {
-            const exam = `S${sem}-${branch}-${slot}`;
+            const exam = `sem${sem}-${branch}-${slot}`;
             acc.push(exam);
             return acc;
+           
         }, []);
-
+        
         if (exams?.length === 0) {
             exams.push("No exams scheduled");
             return res.status(200).json({ exams, details: null, totalStudents: 0 });
@@ -63,10 +66,8 @@ export const getExams = async (req, res) => {
         const room = rooms.map(({ room_no, capacity }) => {
             return { room_no, capacity };
         });
-        const totalStudents = await countStudents({ details },{ rooms: room });
-
-        console.log(totalStudents);
-
+        console.log("rooms", room , "details", details);
+        const totalStudents = await countStudents({ details , rooms: room });
         return res.status(200).json({ exams, details, totalStudents });
     } catch (error) {
         console.log(error);
@@ -78,20 +79,23 @@ export const getRooms = async (req, res) => {
     const user = req.user._id;
     try {
         const rooms = await Room.find({ user }).select('room_no capacity');
+        console.log("rooms", rooms);
         return res.status(200).json(rooms);
+        
     } catch (error) {
         res.status(500).json({ 'message': err.message });
     }
 };
 
 export const createAllocation = async (req, res) => {
+    
     const user = req.user.username;
     const { date, rooms, details } = req.body;
+    console.log(req.body);
     if (!date  || !rooms || !details) {
         return res.status(400).json({ 'message': 'provide date and rooms' });
     } 
     const totalCapacity = rooms.reduce((total, obj) => total + obj.capacity, 0);
-    console.log("here", totalCapacity);
     const formattedDate = date.split('-').reverse().join('-');
     const dateObject = new Date(formattedDate).toISOString();
     try {
@@ -100,15 +104,13 @@ export const createAllocation = async (req, res) => {
 
         if (schedule) {
 
-            await generateSeating(req.body); // function for manipulating the uploadedExcel file for seat arrangement
-
+            await generateSeating(req.body); 
             const newAllocation = new Allocation({
                 user: req.user.username,
                 date: dateObject,
                 rooms,
                 seats: totalCapacity
             });
-
             await newAllocation.save();
 
             res.status(201).json({ "message": 'Allocation created successfully', "Allocation": newAllocation });
@@ -123,16 +125,18 @@ export const createAllocation = async (req, res) => {
 };
 
 export const getAllocation = async (req, res) => {
-    const { date} = req.query;
-    console.log(req.query);
+    const {date} = req.query;
     const user = req.user.username;
     if (!date ) {
         return res.status(400).json({ 'message': 'provide date' });
     }
     try {
         const formattedDate = date.split('-').reverse().join('-');
+        console.log(formattedDate);
         const dateObject = new Date(formattedDate).toISOString();
+        console.log(dateObject);
         const allocations = await allocations.find({ user, date: dateObject }).select('rooms seats').lean();
+        console.log(allocations);
         const rooms = allocations?.flatMap(allocation => allocation.rooms.map(item => item.room_no));
         const seatSelected = allocations.length === 0 ? 0 : allocations[0].seats;
         return res.status(200).json({ rooms, seats: seatSelected });
@@ -144,7 +148,7 @@ export const getAllocation = async (req, res) => {
 
 export const sendExcels = async (req, res) => {
     const email = req.user.email;
-
+    console
     try {
 
         const files = await fs.promises.readdir(directoryPath);
@@ -155,22 +159,25 @@ export const sendExcels = async (req, res) => {
         }
 
         const transporter = nodemailer.createTransport({
-            // Configure your email provider details here
             service: 'gmail',
             auth: {
                 user: process.env.EMAIL,
                 pass: process.env.APP_PASSWORD
             }
+            
         });
-
+        
         const attachments = files.map((file) => {
             const filePath = path.join(directoryPath, file);
             if (fs.existsSync(filePath) && fileNameRegex.test(file)) {
-                return { path: filePath };
+                return { 
+                    path: filePath,
+                    filename: `Exam${file}`
+
+                };
             }
             return null;
         }).filter((attachment) => attachment !== null);
-
         const mailOptions = {
             from: process.env.EMAIL,
             to: email,
