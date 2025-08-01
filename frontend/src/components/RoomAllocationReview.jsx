@@ -229,8 +229,6 @@ export default function RoomAllocationReview() {
                   defaultValue="min" onChange={(e) => setSortTerm(e.target.value)}>
                   <option value="min">Increasing capacity</option>
                   <option value="max">Decreasing capacity</option>
-                  <option value="asc">Increasing Floor(0 - 2)</option>
-                  <option value="desc">Decreasing Floor(2 - 0)</option>
                 </select>
               </div>
             </div>
