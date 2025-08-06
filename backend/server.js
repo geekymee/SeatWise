@@ -26,8 +26,9 @@ const PORT = process.env.PORT || 3500;
 })()
 
 app.use(credentials);
-
-
+app.get('/', (req, res) => {
+    res.json('Welcome to SeatWise API');    
+})
 app.use(cors({
     origin: (origin, callback) => {
         if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
