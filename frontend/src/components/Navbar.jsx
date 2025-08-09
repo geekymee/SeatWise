@@ -5,9 +5,9 @@ import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import useWindowWidth from '../hooks/useWindowWidth'; // <-- use your custom hook
 
 import menu from '../assets/menu.png';
-import menucollapse from '../assets/menucollapse.png';
+import menucollapse from '../assets/menuCollapse.png';
 import home from '../assets/home.png';
-import room from '../assets/addroomlogo.png';
+import room from '../assets/addRoomlogo.png';
 import exam from '../assets/exam.png';
 import seat from '../assets/allocatelogo.png';
 import logout from '../assets/logout.png';
