@@ -4,7 +4,8 @@ import { useState, useRef, useEffect, useMemo } from 'react';
 import ManageRow from './ManageRow';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate } from 'react-router-dom';
-import { ThreeCircles } from 'react-loader-spinner'
+// import { ThreeCircles } from 'react-loader-spinner'
+import { ClipLoader } from "react-spinners";
 
 const url = '/manage-room';
 
@@ -257,24 +258,25 @@ export default function ManageRoom() {
                                 <th className="px-4 py-2 rounded-tr-md rounded-br-md"></th>
                             </tr>
                         </thead>
-                        <tbody >
+                        <tbody>
                             {loading ? (
-                            <tr >
-                                <td colSpan="5" className="text-center py-6 ">
-                                    <ThreeCircles
-                                    height="65"
-                                    width="65"
-                                    color="#23ca85"
-                                    wrapperStyle={{
-                                        "position": "absolute",
-                                        "left": "47%",
-                                        "top": "48%"
-                                    }}
-                                    visible={true}
-                                    />
-                                </td>
-                            </tr>
-      
+                                <tr>
+                                    <td colSpan="6" className="text-center py-6">
+                                        <div className="flex justify-center items-center h-full">
+                                            <ClipLoader
+                                                size={65}
+                                                color="#23ca85"
+                                                cssOverride={{
+                                                    position: "absolute",
+                                                    left: "50%",
+                                                    top: "50%",
+                                                    transform: "translate(-50%, -50%)"
+                                                }}
+                                                loading={loading}
+                                            />
+                                        </div>
+                                    </td>
+                                </tr>
                             ) : (list.map(item => <ManageRow key={item._id ?? item.room_no} room={item.room_no} floor={item.floor_no} building={item.building}
                                 available={item.capacity} handleDelete={handleDelete} />))
                             }

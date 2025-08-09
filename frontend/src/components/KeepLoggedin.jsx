@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Outlet } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 import useRefreshToken from "../hooks/useRefreshToken";
-import { ThreeCircles } from "react-loader-spinner";
+// import { ClipLoader } from "react-loader-spinner";
+import { ClipLoader } from "react-spinners";
 
 const KeepLoggedin = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -34,7 +35,7 @@ const KeepLoggedin = () => {
         <>
             {isLoading ? 
                 <div className="h-screen flex items-center justify-center ">
-                    <ThreeCircles height="65" width="65" color="#23ca85" />
+                    <ClipLoader size={65} color="#23ca85" />
                 </div> : <Outlet />
             }
         </>

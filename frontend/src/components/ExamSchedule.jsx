@@ -1,7 +1,8 @@
 import Dropdown from './Dropdown';
 import { useState, useRef, useEffect, useMemo } from 'react';
 import Input from './Input';
-import { ThreeCircles } from 'react-loader-spinner'
+// import { ThreeCircles } from 'react-loader-spinner'
+import { ClipLoader } from "react-spinners";
 import ExamScheduleRow from './ExamScheduleRow';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
 import { useNavigate } from 'react-router-dom';
@@ -267,25 +268,27 @@ export default function ExamSchedule() {
                         </thead>
                         <tbody>
                             {loading ? (
-                                
                                 <tr>
-                                    <td colSpan="5" className="text-center py-6">
-                                        <ThreeCircles
-                                        height="65"
-                                        width="65"
-                                        color="#23ca85"
-                                        wrapperStyle={{
-                                            "position": "absolute",
-                                            "left": "47%",
-                                            "top": "48%"
-                                        }}
-                                visible={true}/>
+                                    <td colSpan="6" className="text-center py-6">
+                                        <div className="flex justify-center items-center h-full">
+                                            <ClipLoader
+                                                size={65}
+                                                color="#23ca85"
+                                                cssOverride={{
+                                                    position: "absolute",
+                                                    left: "50%",
+                                                    top: "50%",
+                                                    transform: "translate(-50%, -50%)"
+                                                }}
+                                                loading={loading}
+                                            />
+                                        </div>
                                     </td>
                                 </tr>
-
                             ) : (sortedExams.map(item => <ExamScheduleRow key={item._id} id={item._id} date={item.date} sem={item.sem} branch={item.branch} slot={item.slot} subcode={item.subcode} handleDelete={handleDelete} />))
                             }
                         </tbody>
+                        
                     </table>
                 </div>
             </div>

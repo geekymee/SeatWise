@@ -6,6 +6,7 @@ import sys
 import json
 
 def main():
+   
     try:
         data_json = sys.stdin.read() 
         data = json.loads(data_json)

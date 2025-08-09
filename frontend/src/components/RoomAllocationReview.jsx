@@ -1,7 +1,8 @@
 import { useState, useRef, useEffect, useMemo } from 'react';
 import ManageSeats from './ManageSeats';
 import useAxiosPrivate from '../hooks/useAxiosPrivate';
-import { ThreeCircles } from 'react-loader-spinner'
+// import { ThreeCircles } from 'react-loader-spinner'
+import { ClipLoader } from "react-spinners";
 
 
 const url = '/room-allocation-review';
@@ -234,16 +235,15 @@ export default function RoomAllocationReview() {
             </div>
             <div className={`bg-gray-100 h-[21.5rem] overflow-y-auto rounded-b-2xl p-4 w-full ${studentsCount === 0 && "pointer-events-none"}`}>
               
-              {loading ? (<ThreeCircles
-                height="65"
-                width="65"
+              {loading ? (<ClipLoader
+                size={65}
                 color="#23ca85"
-                wrapperStyle={{
-                  "position": "absolute",
-                  "left": "45%",
-                  "top": "40%"
+                cssOverride={{
+                  position: "absolute",
+                  left: "45%",
+                  top: "40%"
                 }}
-                visible={true}
+                loading={loading}
               />) : (filteredRooms.map(item => <ManageSeats key={item.room_no} room={item.room_no} capacity={item.capacity} setSelectedRooms={setSelectedRooms} setSeatSelected={setSeatSelected} bookedRooms={bookedRooms} />))
               }
             </div>
